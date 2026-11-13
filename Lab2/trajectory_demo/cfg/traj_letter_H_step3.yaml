@@ -1,0 +1,516 @@
+# COMP0246 Lab2 Step 3: existing H trajectory with explicit RPY targets.
+# Orientation uses radians, [roll, pitch, yaw].
+joint_names:
+- fr3_joint1
+- fr3_joint2
+- fr3_joint3
+- fr3_joint4
+- fr3_joint5
+- fr3_joint6
+- fr3_joint7
+waypoints:
+  cartesion:
+  - position:
+    - 0.6
+    - 0.1
+    - 0.05
+    time: 3.0
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.58
+    - 0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.56
+    - 0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.54
+    - 0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.52
+    - 0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.5
+    - 0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.48
+    - 0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.46
+    - 0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.44
+    - 0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.42
+    - 0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.4
+    - 0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.38
+    - 0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.36
+    - 0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.34
+    - 0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.32
+    - 0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.3
+    - 0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.319
+    - 0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.338
+    - 0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.356
+    - 0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.375
+    - 0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.394
+    - 0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.412
+    - 0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.431
+    - 0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.45
+    - 0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.45
+    - 0.08
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.45
+    - 0.06
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.45
+    - 0.04
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.45
+    - 0.02
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.45
+    - 0.0
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.45
+    - -0.02
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.45
+    - -0.04
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.45
+    - -0.06
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.45
+    - -0.08
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.45
+    - -0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.471
+    - -0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.493
+    - -0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.514
+    - -0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.536
+    - -0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.557
+    - -0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.579
+    - -0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.6
+    - -0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.58
+    - -0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.56
+    - -0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.54
+    - -0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.52
+    - -0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.5
+    - -0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.48
+    - -0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.46
+    - -0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.44
+    - -0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.42
+    - -0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.4
+    - -0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.38
+    - -0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.36
+    - -0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.34
+    - -0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.32
+    - -0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+  - position:
+    - 0.3
+    - -0.1
+    - 0.05
+    time: 0.4
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0

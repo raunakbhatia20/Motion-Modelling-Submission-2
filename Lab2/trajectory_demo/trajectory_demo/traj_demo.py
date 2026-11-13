@@ -118,6 +118,7 @@ class TrajDemo(Node):
         self.joint_pos_hist = []
         self.joint_vel_hist = []
         self.ee_pos_hist = []
+        self.ee_orientation_hist = []  # RPY radians, timestamp-aligned with ee_pos_hist
 
         # cartesian waypoints that were sent, for plotting and for the timer
         self.waypoint_positions = []
@@ -152,8 +153,10 @@ class TrajDemo(Node):
         self.joint_pos_hist.append(joint_pos)
         self.joint_vel_hist.append(joint_vel)
 
-        ee_pos = self.get_ee_pos_ros()
+        ee_pose = self.get_ee_pose_ros()
+        ee_pos, ee_rpy = ee_pose if ee_pose is not None else (None, None)
         self.ee_pos_hist.append(ee_pos)
+        self.ee_orientation_hist.append(ee_rpy)
 
         # we do this after we have our first callback to have current joint positions
         if not self.created_traj:
@@ -194,6 +197,22 @@ class TrajDemo(Node):
             else:
                 mat[i] = data[i]
         return mat
+
+    def get_ee_pose_ros(self):
+        """Get end-effector Cartesian position (m) and RPY orientation (rad) from TF2."""
+        try:
+            t = self.tf_buffer.lookup_transform(
+                self.base_link, self.ee_link, rclpy.time.Time()
+            )
+        except TransformException as ex:
+            self.get_logger().debug(
+                f"could not transform {self.base_link} to {self.ee_link}: {ex}"
+            )
+            return None
+        xyz = [t.transform.translation.x, t.transform.translation.y, t.transform.translation.z]
+        q = t.transform.rotation
+        rpy = list(PyKDL.Rotation.Quaternion(q.x, q.y, q.z, q.w).GetRPY())
+        return xyz, rpy
 
     def get_ee_pos_ros(self) -> Tuple[float]:
         """FK function that uses TF2 ROS to do forward kinematics and return world coordinates of the end effector.
@@ -292,7 +311,18 @@ class TrajDemo(Node):
             # time_sec is already cumulative
             time_since_start = time_sec
 
-            cur_joint_pos = self.get_joint_pos(cur_joint_pos, pos)
+            # Use orientation constraints when supplied (Step 3).
+            # Earlier trajectory configurations only specify Cartesian position.
+            orientation = waypoint.get("orientation")
+
+            if orientation is not None:
+                if len(orientation) != 3:
+                    raise ValueError(
+                        "Waypoint orientation must contain [roll, pitch, yaw]"
+                    )
+                cur_joint_pos = self.get_joint_pos(cur_joint_pos, pos, orientation)
+            else:
+                cur_joint_pos = self.get_joint_pos(cur_joint_pos, pos)
             goal_positions.append(cur_joint_pos)
             self.waypoint_positions.append(pos)
 
@@ -343,6 +373,46 @@ class TrajDemo(Node):
         fig.savefig(fig_path, dpi=200)
         self.get_logger().info(f"saved plot to {os.path.abspath(fig_path)}")
 
+        # Step 3: plot measured Cartesian position and orientation vs. time.
+        valid = [i for i, (pos, rpy) in enumerate(zip(self.ee_pos_hist, self.ee_orientation_hist))
+                 if pos is not None and rpy is not None]
+        if valid:
+            times = np.asarray([self.time_hist[i] for i in valid], dtype=float)
+            positions = np.asarray([self.ee_pos_hist[i] for i in valid], dtype=float)
+            orientations = np.asarray([self.ee_orientation_hist[i] for i in valid], dtype=float)
+            # Unwrap angles to avoid artificial jumps at +/- pi.
+            orientations = (orientations + np.pi) % (2 * np.pi) - np.pi
+            t0 = times[0]
+            if self.traj_start_time is not None:
+                # Time since trajectory start (the same clock used for time_hist).
+                t0 = (self.traj_start_time - self.start_time).nanoseconds * 1e-9
+            times = times - t0
+            fig_pos, ax_pos = plt.subplots(figsize=(8, 4.5))
+            for i, label in enumerate(["X", "Y", "Z"]):
+                ax_pos.plot(times, positions[:, i], label=f"{label} (m)")
+            ax_pos.set(xlabel="Time since trajectory start (s)",
+                       ylabel="Cartesian position (m)", title="End-effector Cartesian position - H trajectory")
+            ax_pos.grid(True)
+            ax_pos.legend()
+            fig_pos.tight_layout()
+            for ax in fig_pos.axes:
+                ax.set_xlim(0, 26)
+            fig_pos.savefig("step3_cartesian_position.png", dpi=200)
+
+            fig_rpy, ax_rpy = plt.subplots(figsize=(8, 4.5))
+            for i, label in enumerate(["Roll", "Pitch", "Yaw"]):
+                ax_rpy.plot(times, orientations[:, i], label=f"{label} (rad)")
+            ax_rpy.set(xlabel="Time since trajectory start (s)",
+                       ylabel="Orientation (rad)", title="End-effector orientation - H trajectory")
+            ax_rpy.grid(True)
+            ax_rpy.legend()
+            fig_rpy.tight_layout()
+            for ax in fig_rpy.axes:
+                ax.set_xlim(0, 26)
+            fig_rpy.savefig("step3_cartesian_orientation.png", dpi=200)
+            self.get_logger().info("Saved step3_cartesian_position.png and step3_cartesian_orientation.png")
+        else:
+            self.get_logger().warn("No TF2 pose samples found; Step 3 plots not generated")
         plt.show()
 
 
@@ -354,13 +424,14 @@ def main(args=None):
         rclpy.spin(traj_demo)
     except KeyboardInterrupt:
         pass
-
-    traj_demo.plot_joint_traj()
-    # Destroy the node explicitly
-    # (optional - otherwise it will be done automatically
-    # when the garbage collector destroys the node object)
-    traj_demo.destroy_node()
-    rclpy.shutdown()
+    finally:
+        try:
+            traj_demo.plot_joint_traj()
+        finally:
+            traj_demo.destroy_node()
+            # SIGINT or another callback may already have shut down ROS.
+            if rclpy.ok():
+                rclpy.shutdown()
 
 
 if __name__ == "__main__":
